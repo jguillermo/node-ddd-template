@@ -1,0 +1,25 @@
+version: "3.8"
+services:
+  backend:
+    image: my-proyect-app:v-3
+    build:
+      context: .
+      target: development
+    command: firebase emulators:exec "npm run start:dev" --only firestore
+    ports:
+     - "3000:3000"
+    volumes:
+      - .:/usr/src/app
+    networks:
+      api:
+        ipv4_address: 21.21.21.204
+
+networks:
+  api:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 21.21.21.0/24
+volumes:
+  certs:
+    driver: local
